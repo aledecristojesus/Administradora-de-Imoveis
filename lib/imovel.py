@@ -5,14 +5,15 @@
 from endereco import Endereco
 
 class Imovel(Endereco):
-    def __init__(self, area, descricao, preco_minimo, preco_compra, proprietario, endereco):
+    def __init__(self, area, descricao, proprietario, endereco):
         self.area = area
         self.descricao = descricao        
         self.proprietario = proprietario
-        self.preco_minimo = preco_minimo
-        self.preco_compra = preco_compra
+        self.endereco = endereco
+        self.preco_minimo_venda = None
+        self.preco_compra = None
         self.preco_venda = None
         self.antigo_proprietario = None
-        self.endereco = endereco
+        
 
         

@@ -33,7 +33,7 @@ class AdministradoraImovel(object):
         # for imovel in self.imoveis_comprados:
         #     relatorio.append((imovel.endereco, imovel.area, imovel.descricao, imovel.antigo_proprietario, imovel.preco_minimo_venda))
         # return relatorio
-        # pior? :(
+        # refatorar
         return map((lambda imovel: (imovel.endereco, imovel.area, imovel.descricao, imovel.antigo_proprietario, imovel.preco_minimo_venda)), self.imoveis_comprados)
 
     def emitir_relacao_de_imoveis_vendidos_por_bairro(self):
@@ -41,4 +41,13 @@ class AdministradoraImovel(object):
         for imovel in self.imoveis_vendidos:
             if imovel.endereco.bairro not in relatorio.keys(): relatorio[imovel.endereco.bairro] = []
             relatorio[imovel.endereco.bairro].append((imovel.endereco.bairro, imovel.antigo_proprietario, imovel.proprietario, imovel.preco_venda, imovel.preco_compra))
+        return relatorio
+
+    def emitir_relacao_de_compradores_recorrentes(self):
+        relatorio = []
+        compradores = map((lambda imovel: imovel.proprietario), self.imoveis_vendidos)
+        for comprador in compradores:
+            if compradores.count(comprador) > 1:
+                relatorio.append((comprador.nome, comprador.cpf, comprador.endereco, comprador.telefone))
+                compradores.remove(comprador)
         return relatorio

@@ -104,5 +104,38 @@ class TestAdministradoraImoveis(unittest.TestCase):
 
         administradora_imovel.emitir_relacao_de_imoveis_vendidos_por_bairro() |should| equal_to({"Das Pedras" : relatorio_esperado_1, "Jardim das Oliveiras" : relatorio_esperado_2})
 
+    def test_emite_relacao_de_proprietarios_que_compraram_mais_de_um_imovel(self):
+        endereco_1 = Endereco("Rua Tatagiba", 765, "Das Pedras", "Duque de Caxias", "RJ", "28200-000")
+        endereco_2 = Endereco("Rua Herculano", 50, "Das Pedras", "Duque de Caxias", "RJ", "28200-000")
+        endereco_3 = Endereco("Rua dos Bobos", 100, "Das Pedras", "Duque de Caxias", "RJ", "28200-000")
+
+        proprietario_1 = Proprietario("Astrobaldo Ricks", "123456789-00","2722-2222", endereco_1)
+        proprietario_2 = Proprietario("Mr Mini Me", "123456789-01","2722-1111", endereco_2)
+        proprietario_3 = Proprietario("Dr Dolittle", "123456789-02","2722-0001", endereco_3)
+
+        imovel_1 = Imovel(400, "1 quarto, 1 sala, 1 banheiros", proprietario_3, endereco_1)
+        imovel_2 = Imovel(500, "2 quartos, 1 sala, 1 banheiros", proprietario_3, endereco_1)
+        imovel_3 = Imovel(400, "1 quarto, 1 sala, 1 banheiros", proprietario_3, endereco_1)
+        imovel_4 = Imovel(500, "2 quartos, 1 sala, 1 banheiros", proprietario_3, endereco_1)
+        imovel_5 = Imovel(400, "1 quarto, 1 sala, 1 banheiros", proprietario_3, endereco_1)
+
+        administradora_imovel = AdministradoraImovel("Imortal", "45635656777", endereco_1)
+        administradora_imovel.comprar_imovel(imovel_1, 100000.00, 110000.00)
+        administradora_imovel.comprar_imovel(imovel_2, 90000.00, 100000.00)
+        administradora_imovel.comprar_imovel(imovel_3, 80000.00, 90000.00)
+        administradora_imovel.comprar_imovel(imovel_4, 80000.00, 90000.00)
+        administradora_imovel.comprar_imovel(imovel_5, 80000.00, 90000.00)
+
+        administradora_imovel.vender_imovel(imovel_1, proprietario_1, 110000.00)
+        administradora_imovel.vender_imovel(imovel_2, proprietario_1, 100000.00)
+        administradora_imovel.vender_imovel(imovel_3, proprietario_2, 90000.00)
+        administradora_imovel.vender_imovel(imovel_4, proprietario_2, 110000.00)
+        administradora_imovel.vender_imovel(imovel_5, proprietario_3, 100000.00)
+
+        relatorio_esperado_1 = ("Astrobaldo Ricks", "123456789-00", endereco_1, "2722-2222")
+        relatorio_esperado_2 = ("Mr Mini Me", "123456789-01", endereco_2, "2722-1111")
+
+        administradora_imovel.emitir_relacao_de_compradores_recorrentes() |should| equal_to([relatorio_esperado_1, relatorio_esperado_2])
+
 if __name__ == "__main__":
     unittest.main()

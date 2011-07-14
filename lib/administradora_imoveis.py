@@ -12,9 +12,10 @@ class AdministradoraImovel(object):
         self.imoveis_vendidos = []
         self.imoveis_monitorados = []
 
-    def comprar_imovel(self, imovel):
+    def comprar_imovel(self, imovel, preco_minimo_venda):
         imovel.antigo_proprietario = imovel.proprietario
         imovel.proprietario = "Imortal"
+        imovel.preco_minimo_venda = preco_minimo_venda
         self.imoveis_comprados.append(imovel)
 
     def vender_imovel(self, imovel, novo_proprietario, preco_venda):
@@ -25,3 +26,11 @@ class AdministradoraImovel(object):
 
     def monitorar_imovel(self, imovel):
         self.imoveis_monitorados.append(imovel)
+
+    def emitir_relacao_de_imoveis_disponiveis(self):
+        # relatorio = []
+        # for imovel in self.imoveis_comprados:
+        #     relatorio.append((imovel.endereco, imovel.area, imovel.descricao, imovel.antigo_proprietario, imovel.preco_minimo_venda))
+        # return relatorio
+        # pior? :(
+        return map((lambda imovel: (imovel.endereco, imovel.area, imovel.descricao, imovel.antigo_proprietario, imovel.preco_minimo_venda)), self.imoveis_comprados)

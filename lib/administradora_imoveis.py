@@ -36,6 +36,7 @@ class AdministradoraImovel(object):
         # refatorar
         return map((lambda imovel: (imovel.endereco, imovel.area, imovel.descricao, imovel.antigo_proprietario, imovel.preco_minimo_venda)), self.imoveis_comprados)
 
+    #REFATORAR
     def emitir_relacao_de_imoveis_vendidos_por_bairro(self):
         relatorio = {}
         for imovel in self.imoveis_vendidos:
@@ -43,6 +44,7 @@ class AdministradoraImovel(object):
             relatorio[imovel.endereco.bairro].append((imovel.endereco.bairro, imovel.antigo_proprietario, imovel.proprietario, imovel.preco_venda, imovel.preco_compra))
         return relatorio
 
+    #REFATORAR
     def emitir_relacao_de_compradores_recorrentes(self):
         relatorio = []
         compradores = map((lambda imovel: imovel.proprietario), self.imoveis_vendidos)
@@ -50,4 +52,14 @@ class AdministradoraImovel(object):
             if compradores.count(comprador) > 1:
                 relatorio.append((comprador.nome, comprador.cpf, comprador.endereco, comprador.telefone))
                 compradores.remove(comprador)
+        return relatorio
+
+    #REFATORAR
+    def emitir_relacao_de_proprietarios_fornecedores_recorrentes(self):
+        relatorio = []
+        vendedores = map((lambda imovel: imovel.antigo_proprietario), self.imoveis_comprados)
+        for vendedor in vendedores:
+            if vendedores.count(vendedor) > 1:
+                relatorio.append((vendedor.nome, vendedor.telefone))
+                vendedores.remove(vendedor)
         return relatorio

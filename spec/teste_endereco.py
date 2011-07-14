@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import unittest
-from should_dsl import should
-from endereco import Endereco
+from spec_helper import *
 
 
 class TestEndereco(unittest.TestCase):
 
     def test_inicializa_atributos(self):
-        endereco = Endereco("Rua Tatagiba", 765, "Das Pedras","Duque de Caxias", "RJ", "28200-000")
+        endereco = Endereco("Rua Tatagiba", 765, "Das Pedras", "Duque de Caxias", "RJ", "28200-000")
         endereco.rua |should| equal_to("Rua Tatagiba")
         endereco.numero |should| equal_to(765)
         endereco.bairro |should| equal_to("Das Pedras")

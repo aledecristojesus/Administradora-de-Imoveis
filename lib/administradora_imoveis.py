@@ -20,10 +20,13 @@ class AdministradoraImovel(object):
         self.imoveis_comprados.append(imovel)
 
     def vender_imovel(self, imovel, novo_proprietario, preco_venda):
-        imovel.proprietario = novo_proprietario
-        imovel.preco_venda = preco_venda
-        self.imoveis_vendidos.append(imovel)
-        self.imoveis_comprados.remove(imovel)
+        if imovel in self.imoveis_comprados:
+            imovel.proprietario = novo_proprietario
+            imovel.preco_venda = preco_venda
+            self.imoveis_vendidos.append(imovel)
+            self.imoveis_comprados.remove(imovel)
+        else:
+            raise Exception("Imovel nao disponivel para venda.")
 
     def monitorar_imovel(self, imovel):
         self.imoveis_monitorados.append(imovel)

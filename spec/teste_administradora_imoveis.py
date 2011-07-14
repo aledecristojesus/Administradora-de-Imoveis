@@ -43,6 +43,13 @@ class TestAdministradoraImoveis(unittest.TestCase):
         administradora_imovel.imoveis_vendidos[0].preco_venda |should| equal_to(60000.00)
         administradora_imovel.imoveis_comprados |should| equal_to([])
 
+    def test_nao_registra_venda_de_imovel_se_ele_nao_estiver_disponivel(self):
+        endereco = Endereco("Rua Tatagiba", 765, "Das Pedras", "Duque de Caxias", "RJ", "28200-000")
+        administradora_imovel = AdministradoraImovel("Imortal", "45635656777", endereco)
+        proprietario = Proprietario("Astrobaldo Ricks", "987654321-98","96260211", endereco)
+        imovel = Imovel(600, "3 quartos, 1 sala, 2 banheiros", proprietario, endereco)
+        (lambda: administradora_imovel.vender_imovel(imovel, proprietario, 60000.00)) |should| throw(Exception, message = "Imovel nao disponivel para venda.")
+
     def test_registra_imovel_de_interesse_para_monitoracao(self):
         endereco = Endereco("Rua Tatagiba", 765, "Das Pedras", "Duque de Caxias", "RJ", "28200-000")
         administradora_imovel = AdministradoraImovel("Imortal", "45635656777", endereco)
